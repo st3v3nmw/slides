@@ -26,7 +26,7 @@ layout: intro
 
 <br/><br/>
 
-Presented by <a href="https://github.com/st3v3nmw">@st3v3nmw</a> (~~Software Engineer~~ Senior Intern)
+Presented by <a href="https://github.com/st3v3nmw">@st3v3nmw</a> (Software Engineer)
 
 ---
 transition: fade-out
