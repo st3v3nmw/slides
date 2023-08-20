@@ -630,7 +630,7 @@ Index Scan using pg_class_relname_nsp_index on pg_class
   (actual time=0.043..0.046 rows=1 loops=1)
 ```
 
-Are we able to surface the count estimates from the query planner? Probably not.
+Are we able to surface the count estimates from the query planner? `EXPLAIN` only, yes.
 
 ---
 transition: fade-out
@@ -675,7 +675,7 @@ transition: fade-out
 class CustomPaginator(Paginator):
     @cached_property
     def count(self) -> int:
-        """Return an estimate of the total number of objects.
+        """Return an estimate of the total number of objects (* VERY * hacky btw).
         Could be made more robust by first running the normal COUNT(*)
         with a `SET LOCAL statement_timeout TO 50`
         and then reverting to this if that doesn't complete in time.
@@ -689,12 +689,12 @@ class CustomPaginator(Paginator):
                 .query
             )
             query.group_by = None
-            query_string = str(query)
-            query_string = query_string.replace(
+            sql, params = query.get_compiler(DEFAULT_DB_ALIAS).as_sql()
+            sql = sql.replace(
                 f'FROM "{db_table}"',
                 f'FROM "{db_table}" TABLESAMPLE BERNOULLI (10) REPEATABLE (42)',
             )
-            cursor.execute(query_string)
+            cursor.execute(sql, params)
             return 10 * int(cursor.fetchone()[0])
 ```
 
