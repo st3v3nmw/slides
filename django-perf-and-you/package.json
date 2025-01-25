@@ -9,8 +9,8 @@
   "dependencies": {
     "@mrdrogdrog/optional": "^1.2.1",
     "@slidev/cli": "^0.42.5",
-    "@slidev/theme-default": "latest",
-    "@slidev/theme-seriph": "latest",
+    "@slidev/theme-default": "^0.21.2",
+    "@slidev/theme-seriph": "^0.21.3",
     "slidev-theme-geist": "^0.8.1"
   },
   "devDependencies": {
