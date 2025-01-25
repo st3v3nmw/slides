@@ -10,9 +10,9 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-        matrix:
-            talk:
-                - django-perf-and-you
+      matrix:
+        slides:
+          - django-perf-and-you
 
     steps:
       - uses: actions/checkout@v3
@@ -28,17 +28,17 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        run: cd ${{ matrix.talk }} && pnpm install
+        run: cd ${{ matrix.slides }} && pnpm install
 
       - name: Install slidev
         run:  pnpm i -g @slidev/cli
 
       - name: Build
-        run: cd ${{ matrix.talk }} && slidev build --base talks/${{ matrix.talk }}
+        run: cd ${{ matrix.slides }} && slidev build --base slides/${{ matrix.slides }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ matrix.talk }}/dist/
-          destination_dir: ${{ matrix.talk }}
+          publish_dir: ${{ matrix.slides }}/dist/
+          destination_dir: ${{ matrix.slides }}
